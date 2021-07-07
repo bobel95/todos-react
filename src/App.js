@@ -1,9 +1,10 @@
 import './App.css';
+import MainPage from "./layout/MainPage";
 
 function App() {
   return (
     <div className="App">
-      Hello
+      <MainPage/>
     </div>
   );
 }
