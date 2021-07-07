@@ -1,23 +1,26 @@
 import React from 'react';
-import {Button, Paper, styled, Typography} from "@material-ui/core";
+import {Button, Container, Paper, styled, Typography} from "@material-ui/core";
 import HomeIcon from '@material-ui/icons/Home';
 import WorkIcon from "@material-ui/icons/Work";
 import SportsEsportsIcon from "@material-ui/icons/SportsEsports";
 import BrokenImageIcon from "@material-ui/icons/BrokenImage";
-import {getTimeLeft} from "../util/DateUtil";
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import DeleteIcon from '@material-ui/icons/Delete';
+import {getDateAndTimeString, getTimeLeft} from "../util/DateUtil";
 
 const getIconByTaskType = taskType => {
     const SIZE = "large";
+    const COLOR = "action";
 
     switch (taskType) {
         case "HOME":
-            return <HomeIcon fontSize={SIZE}/>;
+            return <HomeIcon fontSize={SIZE} color={COLOR}/>;
         case "WORK":
-            return <WorkIcon fontSize={SIZE}/>;
+            return <WorkIcon fontSize={SIZE} color={COLOR}/>;
         case "HOBBY":
-            return <SportsEsportsIcon fontSize={SIZE}/>;
+            return <SportsEsportsIcon fontSize={SIZE} color={COLOR}/>;
         default:
-            return <BrokenImageIcon fontSize={SIZE}/>;
+            return <BrokenImageIcon fontSize={SIZE} color={COLOR}/>;
     }
 }
 
@@ -46,35 +49,73 @@ const Task = props => {
         justifyContent: "center"
     });
 
+    const TaskDetails = styled(Container) ({
+        borderTop: "1px solid #aaa",
+        width: "100%",
+        padding: "5px",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+    });
+
+    const TaskName = styled(Typography) ({
+        textDecoration: finished ? "line-through" : "none"
+    });
+
+    const DueDateText = styled(Typography) ({
+        color: daysLeft < 1 ? "red" : ""
+    });
+
+    const MyButton = styled(Button) ({
+        margin: "5px",
+        textTransform: "none"
+    })
+
+    const taskActions = (
+        <div>
+            <MyButton variant="outlined">
+                Complete Task
+                <CheckBoxIcon fontSize="medium" color="action"/>
+            </MyButton>
+            <MyButton variant="outlined">
+                Delete
+                <DeleteIcon fontSize="medium" color="action"/>
+            </MyButton>
+        </div>
+    );
+
+    const finishedDetails = (
+        <TaskDetails>
+            <CheckBoxIcon fontSize="large" style={{fill: "#66bf51"}}/>
+            <Typography variant="subtitle1" color="textSecondary">
+                Completed at: {getDateAndTimeString(new Date(finishedDate))}
+            </Typography>
+            <Typography variant="subtitle1" color="textSecondary">
+                Actual: {actualTime}h
+            </Typography>
+        </TaskDetails>
+    )
+
+    const dueDateText = finished
+        ? `Due at: ${getDateAndTimeString(new Date(dueDate))}`
+        : `Due in: ${daysLeft} days, ${hoursLeft}h`;
+
     return (
         <TaskContainer variant="outlined">
-            <Typography variant="h5" gutterBottom style={
-                {textDecoration: finished ? "line-through" : "none"}
-            }>
-                {name}
-            </Typography>
-            <div style={{
-                borderTop: "1px solid #aaa",
-                borderBottom: "1px solid #aaa",
-                width: "100%",
-                padding: "5px",
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-around",
-            }}>
+            <TaskName variant="h5" gutterBottom>{name}</TaskName>
+            <TaskDetails>
                 {getIconByTaskType(taskType)}
-                <div>
-                    <Typography variant="subtitle1">Due in: {daysLeft} days and {hoursLeft}h</Typography>
-                </div>
-                <Typography variant="subtitle1">Estimated: {estimatedTime}h</Typography>
-            </div>
-
-            <div>
-                <Button>Mark as finished</Button>
-            </div>
+                <DueDateText variant="subtitle1" color="textSecondary">
+                    {dueDateText}
+                </DueDateText>
+                <Typography variant="subtitle1" color="textSecondary">
+                    Estimated: {estimatedTime}h
+                </Typography>
+            </TaskDetails>
+            {finished ? finishedDetails : taskActions}
         </TaskContainer>
     );
-};
+}
 
 export default Task;
