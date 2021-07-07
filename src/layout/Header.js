@@ -12,7 +12,7 @@ const Header = () => {
     })
 
     return (
-        <MyAppBar>
+        <MyAppBar position="sticky">
             <Typography variant="h4" color="textPrimary" style={{flex: "1"}}>To-do</Typography>
             <Typography variant="h5" color="textPrimary">Username</Typography>
         </MyAppBar>
