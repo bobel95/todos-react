@@ -8,6 +8,7 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {getDateAndTimeString, getTimeLeft} from "../util/DateUtil";
 import SimpleModal from "./SimpleModal";
+import CompleteTaskForm from "./CompleteTaskForm";
 
 const getIconByTaskType = taskType => {
     const SIZE = "large";
@@ -43,7 +44,7 @@ const Task = props => {
     const TaskContainer = styled(Paper) ({
         padding: "1rem",
         width: "80%",
-        margin: "10px",
+        margin: "1rem",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -86,7 +87,10 @@ const Task = props => {
 
     const taskActions = (
         <TaskActions>
-            <SimpleModal component={completeTaskButton} content={<div>salam</div>}/>
+            <SimpleModal
+                component={completeTaskButton}
+                content={<CompleteTaskForm taskId={id}/>}
+            />
             <MyButton variant="outlined">
                 Delete
                 <DeleteIcon fontSize="medium" color="action"/>
@@ -125,6 +129,6 @@ const Task = props => {
             {finished ? finishedDetails : taskActions}
         </TaskContainer>
     );
-}
+};
 
 export default Task;

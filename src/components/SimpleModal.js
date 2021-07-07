@@ -1,8 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import Link from "@material-ui/core/Link";
-import Typography from "@material-ui/core/Typography";
 
 const modalStyle = {
     top: `${50}%`,
@@ -13,9 +11,9 @@ const modalStyle = {
 const useStyles = makeStyles((theme) => ({
     paper: {
         position: 'absolute',
-        width: 400,
+        width: 300,
         backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
+        border: '2px solid #aaa',
         padding: theme.spacing(1, 4, 3),
         borderRadius: "1rem",
     },
@@ -42,11 +40,6 @@ const SimpleModal = (props) => {
 
     return (
         <div>
-            {/*<Typograph>*/}
-            {/*    <Link href="#" onClick={handleOpen} variant="body2">*/}
-            {/*        Add a custom category*/}
-            {/*    </Link>*/}
-            {/*</Typograph>*/}
             <div onClick={handleOpen}>
                 {component}
             </div>
