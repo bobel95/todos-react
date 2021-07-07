@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import completeTaskFormValidator from "./completeTaskFormValidator";
+import {finishTask} from "../api/tasks";
 
 const useCompleteTaskForm = taskId => {
 
@@ -25,9 +26,10 @@ const useCompleteTaskForm = taskId => {
 
     useEffect(() => {
         if (isSubmitting && Object.keys(errors).length === 0) {
-            console.log(`Is submitting for taskId: ${taskId}, hours: ${values.timeSpent}`);
+            finishTask(taskId, values.timeSpent)
+                .then(() => window.location.reload());
         }
-    }, [errors, isSubmitting]);
+    }, [taskId, values.timeSpent, errors, isSubmitting]);
 
     return { values, handleChange, handleSubmit, errors };
 };
