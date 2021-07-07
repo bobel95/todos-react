@@ -17,8 +17,8 @@ const MainPage = () => {
             width: "90%",
             justifyContent: "space-between"
         }}>
-            <Button variant="outlined">
-                <Link to="/add" style={{textDecoration: "none", color: "#666"}}>
+            <Button variant="outlined" style={{backgroundColor: "#ccc"}}>
+                <Link to="/add" style={{textDecoration: "none", color: "#111"}}>
                     <Typography variant="h5">
                         Add task
                     </Typography>

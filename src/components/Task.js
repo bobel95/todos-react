@@ -7,8 +7,10 @@ import BrokenImageIcon from "@material-ui/icons/BrokenImage";
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {getDateAndTimeString, getTimeLeft} from "../util/DateUtil";
+import {deleteTask} from "../api/tasks";
 import SimpleModal from "./SimpleModal";
 import CompleteTaskForm from "./CompleteTaskForm";
+import {useLocation} from "react-router-dom";
 
 const getIconByTaskType = taskType => {
     const SIZE = "large";
@@ -39,7 +41,16 @@ const Task = props => {
         taskType
     } = props.data;
 
+    const reloadTasks = props.reloadTasks;
+
     const { daysLeft, hoursLeft } = getTimeLeft(new Date(dueDate));
+
+    const handleDelete = () => {
+        deleteTask(id)
+            .then(() => {
+                reloadTasks();
+            });
+    }
 
     const TaskContainer = styled(Paper) ({
         padding: "1rem",
@@ -48,7 +59,9 @@ const Task = props => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        backgroundColor: "#eee"
+
     });
 
     const TaskDetails = styled(Container) ({
@@ -89,9 +102,9 @@ const Task = props => {
         <TaskActions>
             <SimpleModal
                 component={completeTaskButton}
-                content={<CompleteTaskForm taskId={id}/>}
+                content={<CompleteTaskForm taskId={id} reloadTasks={reloadTasks} />}
             />
-            <MyButton variant="outlined">
+            <MyButton variant="outlined" onClick={handleDelete}>
                 Delete
                 <DeleteIcon fontSize="medium" color="action"/>
             </MyButton>
@@ -111,17 +124,19 @@ const Task = props => {
     )
 
     const dueDateText = finished
-        ? `Due at: ${getDateAndTimeString(new Date(dueDate))}`
-        : `Due in: ${daysLeft} days, ${hoursLeft}h`;
+        ? <Typography variant="subtitle1" color="textSecondary">
+            {`Due at: ${getDateAndTimeString(new Date(dueDate))}`}
+        </Typography>
+        : <DueDateText variant="subtitle1" color="textSecondary">
+            {`Due in: ${daysLeft} days, ${hoursLeft}h`}
+        </DueDateText>
 
     return (
         <TaskContainer variant="outlined">
             <TaskName variant="h5" gutterBottom>{name}</TaskName>
             <TaskDetails>
                 {getIconByTaskType(taskType)}
-                <DueDateText variant="subtitle1" color="textSecondary">
-                    {dueDateText}
-                </DueDateText>
+                {dueDateText}
                 <Typography variant="subtitle1" color="textSecondary">
                     Estimated: {estimatedTime}h
                 </Typography>

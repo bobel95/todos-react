@@ -16,13 +16,16 @@ const TaskList = () => {
     });
 
     const [tasks, setTasks] = useState([]);
+    const [state, setState] = useState(false);
+
+    const reloadTasks = () => {
+        setState(!state);
+    }
 
     useEffect(() => {
         getTasks()
             .then(res => setTasks(res.data));
-    }, []);
-
-    console.log(tasks);
+    }, [state]);
 
     return (
         <TaskListContainer>
@@ -30,7 +33,7 @@ const TaskList = () => {
                 <Button>sort</Button>
             </div>
             {tasks.map(task => (
-                <Task data={task}/>
+                <Task data={task} reloadTasks={reloadTasks} />
             ))}
         </TaskListContainer>
     );

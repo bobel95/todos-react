@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import completeTaskFormValidator from "./completeTaskFormValidator";
 import {finishTask} from "../api/tasks";
 
-const useCompleteTaskForm = taskId => {
+const useCompleteTaskForm = (taskId, reloadTasks) => {
 
     const [values, setValues] = useState({
         timeSpent: ""
@@ -27,9 +27,9 @@ const useCompleteTaskForm = taskId => {
     useEffect(() => {
         if (isSubmitting && Object.keys(errors).length === 0) {
             finishTask(taskId, values.timeSpent)
-                .then(() => window.location.reload());
+                .then(() => reloadTasks());
         }
-    }, [taskId, values.timeSpent, errors, isSubmitting]);
+    }, [reloadTasks, taskId, values.timeSpent, errors, isSubmitting]);
 
     return { values, handleChange, handleSubmit, errors };
 };

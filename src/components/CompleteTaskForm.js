@@ -13,9 +13,8 @@ const CompleteTaskForm = props => {
         padding: "1rem",
     })
 
-    const { taskId } = props;
-
-    const { values, handleChange, handleSubmit, errors } = useCompleteTaskForm(taskId);
+    const { taskId, reloadTasks } = props;
+    const { values, handleChange, handleSubmit, errors } = useCompleteTaskForm(taskId, reloadTasks);
 
     return (
         <CompleteTaskFormContainer component="main" maxWidth="xs">
