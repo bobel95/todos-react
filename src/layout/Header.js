@@ -4,7 +4,7 @@ import {AppBar, styled, Typography} from "@material-ui/core";
 const Header = () => {
 
     const MyAppBar = styled(AppBar) ({
-        backgroundColor: "rgba(255,255,255,0)",
+        backgroundColor: "rgba(255,255,255)",
         padding: "1rem 10%",
         display: "flex",
         flexDirection: "row",

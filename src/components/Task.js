@@ -7,6 +7,7 @@ import BrokenImageIcon from "@material-ui/icons/BrokenImage";
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {getDateAndTimeString, getTimeLeft} from "../util/DateUtil";
+import SimpleModal from "./SimpleModal";
 
 const getIconByTaskType = taskType => {
     const SIZE = "large";
@@ -54,10 +55,14 @@ const Task = props => {
         width: "100%",
         padding: "5px",
         display: "flex",
-        flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
     });
+
+    const TaskActions = styled(Container) ({
+        display: "flex",
+        justifyContent: "center"
+    })
 
     const TaskName = styled(Typography) ({
         textDecoration: finished ? "line-through" : "none"
@@ -72,17 +77,21 @@ const Task = props => {
         textTransform: "none"
     })
 
+    const completeTaskButton = (
+        <MyButton variant="outlined">
+            Complete Task
+            <CheckBoxIcon fontSize="medium" color="action"/>
+        </MyButton>
+    );
+
     const taskActions = (
-        <div>
-            <MyButton variant="outlined">
-                Complete Task
-                <CheckBoxIcon fontSize="medium" color="action"/>
-            </MyButton>
+        <TaskActions>
+            <SimpleModal component={completeTaskButton} content={<div>salam</div>}/>
             <MyButton variant="outlined">
                 Delete
                 <DeleteIcon fontSize="medium" color="action"/>
             </MyButton>
-        </div>
+        </TaskActions>
     );
 
     const finishedDetails = (
