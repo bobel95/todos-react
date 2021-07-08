@@ -1,7 +1,6 @@
 const completeTaskFormValidator = values => {
     let errors = {};
 
-    console.log(values);
     if (!values.estimatedTime) {
         errors.estimatedTime = "This field is required";
     }

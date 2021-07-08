@@ -101,7 +101,7 @@ const AddTaskForm = () => {
                                 label="Due Date"
                                 type="datetime-local"
                                 name="dueDate"
-                                ampm={false}
+                                ampm="false"
                                 onChange={handleChange}
                                 value={values.dueDate}
                                 error={!!errors.dueDate}

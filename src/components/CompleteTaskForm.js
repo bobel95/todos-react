@@ -23,7 +23,7 @@ const CompleteTaskForm = props => {
     const { values, handleChange, handleSubmit, errors } = useCompleteTaskForm(taskId, reloadTasks);
 
     return (
-        <CompleteTaskFormContainer component="main" maxWidth="xs">
+        <CompleteTaskFormContainer>
             <div>
                 <Typography component="h1" variant="h6" gutterBottom>
                     How much time did it take you to complete this task?
