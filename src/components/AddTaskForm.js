@@ -1,5 +1,5 @@
 import React from 'react';
-import {styled} from "@material-ui/core";
+import {FormGroup, Paper, styled} from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import useAddTaskForm from "../validation/useAddTaskForm";
 import Typography from "@material-ui/core/Typography";
@@ -9,8 +9,29 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import FormControl from '@material-ui/core/FormControl';
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        marginTop: theme.spacing(5),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+
+    },
+    form: {
+        width: '100%',
+        marginTop: theme.spacing(1),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+}));
 
 const AddTaskForm = () => {
+
+    const classes = useStyles()
+
     const AddTaskFormContainer = styled(Container) ({
         padding: "1rem",
     })
@@ -19,11 +40,11 @@ const AddTaskForm = () => {
 
     return (
         <AddTaskFormContainer component="main" maxWidth="xs">
-            <div>
-                <Typography component="h1" variant="h5" gutterBottom>
+            <div className={classes.paper}>
+                <Typography component="h1" variant="h4" gutterBottom>
                     Add a task
                 </Typography>
-                <form onSubmit={handleSubmit}>
+                <form className={classes.form} onSubmit={handleSubmit}>
 
                     <FormControl
                         fullWidth
@@ -36,7 +57,7 @@ const AddTaskForm = () => {
                             onChange={handleChange}
                             value={values.taskType}
                             error={!!errors.taskType}
-                            required
+                            placeholder={errors.taskType}
                         >
                             <MenuItem value={"HOME"}>Home</MenuItem>
                             <MenuItem value={"WORK"}>Work</MenuItem>
@@ -46,19 +67,13 @@ const AddTaskForm = () => {
 
                     <TextField
                         type="number"
-                        InputProps={{
-                            inputProps: {
-                                min: 0,
-                            }
-                        }}
                         variant="outlined"
                         margin="normal"
-                        required
                         fullWidth
+                        autoFocus
                         id="estimatedTime"
                         label="Estimated Time (hours)"
                         name="estimatedTime"
-                        autoFocus
                         onChange={handleChange}
                         value={values.estimatedTime}
                         error={!!errors.estimatedTime}
@@ -68,12 +83,11 @@ const AddTaskForm = () => {
                     <TextField
                         variant="outlined"
                         margin="normal"
-                        required
                         fullWidth
+                        autoFocus
                         id="name"
                         label="Task name"
                         name="name"
-                        autoFocus
                         onChange={handleChange}
                         value={values.name}
                         error={!!errors.name}
@@ -85,6 +99,7 @@ const AddTaskForm = () => {
                         label="Due Date"
                         type="datetime-local"
                         name="dueDate"
+                        ampm={false}
                         onChange={handleChange}
                         value={values.dueDate}
                         error={!!errors.dueDate}
@@ -95,10 +110,11 @@ const AddTaskForm = () => {
                     />
 
                     <Button
-                        fullWidth
                         variant="contained"
                         color="primary"
                         type="submit"
+                        fullWidth
+                        className={classes.submit}
                     >
                         Add Task
                     </Button>

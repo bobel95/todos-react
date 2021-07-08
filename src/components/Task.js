@@ -43,7 +43,7 @@ const Task = props => {
 
     const reloadTasks = props.reloadTasks;
 
-    const { daysLeft, hoursLeft } = getTimeLeft(new Date(dueDate));
+    const { daysLeft, hoursLeft, minutesLeft } = getTimeLeft(new Date(dueDate));
 
     const handleDelete = () => {
         deleteTask(id)
@@ -127,9 +127,14 @@ const Task = props => {
         ? <Typography variant="subtitle1" color="textSecondary">
             {`Due at: ${getDateAndTimeString(new Date(dueDate))}`}
         </Typography>
-        : <DueDateText variant="subtitle1" color="textSecondary">
-            {`Due in: ${daysLeft} days, ${hoursLeft}h`}
-        </DueDateText>
+        : <div>
+            <DueDateText variant="subtitle1" color="textSecondary">
+                {`Due at: ${getDateAndTimeString(new Date(dueDate))}`}
+                <br/>
+                {`Time left: ${daysLeft} days, ${hoursLeft}h, ${minutesLeft}min`}
+            </DueDateText>
+        </div>
+
 
     return (
         <TaskContainer variant="outlined">
