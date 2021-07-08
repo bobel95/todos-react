@@ -41,22 +41,25 @@ const TaskList = () => {
             : <ArrowDownwardIcon/>
     }
 
-    useEffect(() => {
-        // if (sorting !== null) {
-            const comparator = sorting === "ASC"
-                ? (a, b) => (new Date(a.dueDate) < new Date(b.dueDate)) ? 1 : -1
-                : (a, b) => (new Date(a.dueDate) > new Date(b.dueDate)) ? 1 : -1;
+    const sortTasks = (tasks) => {
+        if (sorting === null) {
+            return tasks;
+        }
 
-            const sortedTasks = [...tasks].sort(comparator);
-            setTasks(sortedTasks);
-        // }
-    }, [sorting]);
+        const comparator = sorting === "ASC"
+            ? (a, b) => (new Date(a.dueDate) < new Date(b.dueDate)) ? 1 : -1
+            : (a, b) => (new Date(a.dueDate) > new Date(b.dueDate)) ? 1 : -1;
 
+        return [...tasks].sort(comparator);
+    }
 
     useEffect(() => {
         getTasks()
-            .then(res => setTasks(res.data));
-    }, [state]);
+            .then(res => {
+                const tasks = sortTasks(res.data);
+                setTasks(tasks);
+            });
+    }, [state, sorting]);
 
     return (
         <TaskListContainer>
@@ -65,8 +68,8 @@ const TaskList = () => {
                     Sort by Due Date {getSortingIcon()}
                 </MyButton>
             </div>
-            {tasks.map(task => (
-                <Task data={task} reloadTasks={reloadTasks} />
+            {tasks.map((task, i) => (
+                <Task data={task} reloadTasks={reloadTasks} key={i}/>
             ))}
         </TaskListContainer>
     );
