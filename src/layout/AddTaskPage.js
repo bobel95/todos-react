@@ -6,9 +6,9 @@ import {Container, styled} from "@material-ui/core";
 const AddTaskPage = () => {
 
     const FormContainer = styled(Container) ({
-        width: "80%",
+        width: "50%",
         margin: "2rem auto",
-        padding: "1rem",
+        padding: "3rem",
         border: "1px solid #aaa",
         borderRadius: "15px",
     })

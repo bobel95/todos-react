@@ -17,13 +17,13 @@ const MainPage = () => {
             width: "90%",
             justifyContent: "space-between"
         }}>
-            <Button variant="outlined" style={{backgroundColor: "#ccc"}}>
-                <Link to="/add" style={{textDecoration: "none", color: "#111"}}>
+            <Link to="/add" style={{textDecoration: "none", color: "#111"}}>
+                <Button variant="outlined" style={{backgroundColor: "#ccc"}}>
                     <Typography variant="h5">
                         Add task
                     </Typography>
-                </Link>
-            </Button>
+                </Button>
+            </Link>
         </div>
     )
 

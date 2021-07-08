@@ -13,23 +13,25 @@ const CompleteTaskForm = props => {
         padding: "1rem",
     })
 
+    const textFieldProps = {
+        inputProps: {
+            min: 0
+        }
+    };
+
     const { taskId, reloadTasks } = props;
     const { values, handleChange, handleSubmit, errors } = useCompleteTaskForm(taskId, reloadTasks);
 
     return (
         <CompleteTaskFormContainer component="main" maxWidth="xs">
             <div>
-                <Typography component="h1" variant="h5">
-                    One more thing
+                <Typography component="h1" variant="h6" gutterBottom>
+                    How much time did it take you to complete this task?
                 </Typography>
                 <form noValidate onSubmit={handleSubmit}>
                     <TextField
                         type="number"
-                        InputProps={{
-                            inputProps: {
-                                min: 0,
-                            }
-                        }}
+                        InputProps={textFieldProps}
                         variant="outlined"
                         margin="normal"
                         required

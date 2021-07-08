@@ -1,6 +1,4 @@
 import React from 'react';
-import {FormGroup, Paper, styled} from "@material-ui/core";
-import Container from "@material-ui/core/Container";
 import useAddTaskForm from "../validation/useAddTaskForm";
 import Typography from "@material-ui/core/Typography";
 import InputLabel from '@material-ui/core/InputLabel';
@@ -10,6 +8,8 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import FormControl from '@material-ui/core/FormControl';
 import {makeStyles} from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-
     },
     form: {
         width: '100%',
@@ -30,84 +29,92 @@ const useStyles = makeStyles((theme) => ({
 
 const AddTaskForm = () => {
 
-    const classes = useStyles()
-
-    const AddTaskFormContainer = styled(Container) ({
-        padding: "1rem",
-    })
+    const classes = useStyles();
 
     const { values, handleChange, handleSubmit, errors } = useAddTaskForm();
 
     return (
-        <AddTaskFormContainer component="main" maxWidth="xs">
+        <div>
             <div className={classes.paper}>
                 <Typography component="h1" variant="h4" gutterBottom>
                     Add a task
                 </Typography>
                 <form className={classes.form} onSubmit={handleSubmit}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <FormControl fullWidth>
+                                <InputLabel style={{padding: "0 10px"}}>
+                                    Category
+                                </InputLabel>
+                                <Select
+                                    labelId="taskType-label"
+                                    id="taskType"
+                                    name="taskType"
+                                    onChange={handleChange}
+                                    value={values.taskType}
+                                    error={!!errors.taskType}
+                                    placeholder={errors.taskType}
+                                >
+                                    <MenuItem value={"HOME"}>Home</MenuItem>
+                                    <MenuItem value={"WORK"}>Work</MenuItem>
+                                    <MenuItem value={"HOBBY"}>Hobby</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
 
-                    <FormControl
-                        fullWidth
-                    >
-                        <InputLabel>Category</InputLabel>
-                        <Select
-                            labelId="taskType-label"
-                            id="taskType"
-                            name="taskType"
-                            onChange={handleChange}
-                            value={values.taskType}
-                            error={!!errors.taskType}
-                            placeholder={errors.taskType}
-                        >
-                            <MenuItem value={"HOME"}>Home</MenuItem>
-                            <MenuItem value={"WORK"}>Work</MenuItem>
-                            <MenuItem value={"HOBBY"}>Hobby</MenuItem>
-                        </Select>
-                    </FormControl>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                fullWidth
+                                autoFocus
+                                id="name"
+                                label="Task name"
+                                name="name"
+                                onChange={handleChange}
+                                value={values.name}
+                                error={!!errors.name}
+                                helperText={errors.name}
+                            />
+                        </Grid>
 
-                    <TextField
-                        type="number"
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        autoFocus
-                        id="estimatedTime"
-                        label="Estimated Time (hours)"
-                        name="estimatedTime"
-                        onChange={handleChange}
-                        value={values.estimatedTime}
-                        error={!!errors.estimatedTime}
-                        helperText={errors.estimatedTime}
-                    />
+                        <Grid item xs={6}>
+                            <TextField
+                                type="number"
+                                variant="outlined"
+                                margin="normal"
+                                fullWidth
+                                autoFocus
+                                id="estimatedTime"
+                                label="Estimated Time (hours)"
+                                name="estimatedTime"
+                                onChange={handleChange}
+                                value={values.estimatedTime}
+                                error={!!errors.estimatedTime}
+                                helperText={errors.estimatedTime}
+                            />
+                        </Grid>
 
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        autoFocus
-                        id="name"
-                        label="Task name"
-                        name="name"
-                        onChange={handleChange}
-                        value={values.name}
-                        error={!!errors.name}
-                        helperText={errors.name}
-                    />
-
-                    <TextField
-                        id="dueDate"
-                        label="Due Date"
-                        type="datetime-local"
-                        name="dueDate"
-                        ampm={false}
-                        onChange={handleChange}
-                        value={values.dueDate}
-                        error={!!errors.dueDate}
-                        helperText={errors.dueDate}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
+                        <Grid item xs={6}>
+                            <TextField
+                                id="dueDate"
+                                label="Due Date"
+                                type="datetime-local"
+                                name="dueDate"
+                                ampm={false}
+                                onChange={handleChange}
+                                value={values.dueDate}
+                                error={!!errors.dueDate}
+                                helperText={errors.dueDate}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                style={{
+                                    width: "100%"
+                                }}
+                            />
+                        </Grid>
+                    </Grid>
 
                     <Button
                         variant="contained"
@@ -120,7 +127,7 @@ const AddTaskForm = () => {
                     </Button>
                 </form>
             </div>
-        </AddTaskFormContainer>
+        </div>
     );
 };
 

@@ -10,7 +10,6 @@ import {getDateAndTimeString, getTimeLeft} from "../util/DateUtil";
 import {deleteTask} from "../api/tasks";
 import SimpleModal from "./SimpleModal";
 import CompleteTaskForm from "./CompleteTaskForm";
-import {useLocation} from "react-router-dom";
 
 const getIconByTaskType = taskType => {
     const SIZE = "large";
@@ -40,9 +39,7 @@ const Task = props => {
         name,
         taskType
     } = props.data;
-
     const reloadTasks = props.reloadTasks;
-
     const { daysLeft, hoursLeft, minutesLeft } = getTimeLeft(new Date(dueDate));
 
     const handleDelete = () => {
@@ -61,7 +58,6 @@ const Task = props => {
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#eee"
-
     });
 
     const TaskDetails = styled(Container) ({
@@ -75,7 +71,7 @@ const Task = props => {
 
     const TaskActions = styled(Container) ({
         display: "flex",
-        justifyContent: "center"
+        justifyContent: "space-around"
     })
 
     const TaskName = styled(Typography) ({
@@ -91,23 +87,33 @@ const Task = props => {
         textTransform: "none"
     })
 
-    const completeTaskButton = (
-        <MyButton variant="outlined">
-            Complete Task
+    const DeleteButton = styled(MyButton) ({
+        color: "#d73d3d",
+        borderColor: "#d73d3d"
+    })
+
+    const FinishTaskButton = styled(MyButton) ({
+        color: "green",
+        borderColor: "green"
+    })
+
+    const finishTaskButton = (
+        <FinishTaskButton variant="outlined" style={{color: "green"}}>
+            Finish Task
             <CheckBoxIcon fontSize="medium" color="action"/>
-        </MyButton>
+        </FinishTaskButton>
     );
 
     const taskActions = (
         <TaskActions>
             <SimpleModal
-                component={completeTaskButton}
+                component={finishTaskButton}
                 content={<CompleteTaskForm taskId={id} reloadTasks={reloadTasks} />}
             />
-            <MyButton variant="outlined" onClick={handleDelete}>
+            <DeleteButton variant="outlined" onClick={handleDelete}>
                 Delete
                 <DeleteIcon fontSize="medium" color="action"/>
-            </MyButton>
+            </DeleteButton>
         </TaskActions>
     );
 
@@ -127,10 +133,16 @@ const Task = props => {
         ? <Typography variant="subtitle1" color="textSecondary">
             {`Due at: ${getDateAndTimeString(new Date(dueDate))}`}
         </Typography>
-        : <div>
+        : <div style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+        }}>
             <DueDateText variant="subtitle1" color="textSecondary">
                 {`Due at: ${getDateAndTimeString(new Date(dueDate))}`}
-                <br/>
+            </DueDateText>
+            <DueDateText variant="subtitle1" color="textSecondary">
                 {`Time left: ${daysLeft} days, ${hoursLeft}h, ${minutesLeft}min`}
             </DueDateText>
         </div>
@@ -140,7 +152,9 @@ const Task = props => {
         <TaskContainer variant="outlined">
             <TaskName variant="h5" gutterBottom>{name}</TaskName>
             <TaskDetails>
-                {getIconByTaskType(taskType)}
+                <div style={{minWidth: "100px"}}>
+                    {getIconByTaskType(taskType)}
+                </div>
                 {dueDateText}
                 <Typography variant="subtitle1" color="textSecondary">
                     Estimated: {estimatedTime}h
