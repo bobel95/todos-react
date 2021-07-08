@@ -14,8 +14,9 @@ const MainPage = () => {
         <div style={{
             display: "flex",
             flexDirection: "row-reverse",
-            width: "90%",
-            justifyContent: "space-between"
+            width: "50%",
+            margin: "0 auto",
+            justifyContent: "space-between",
         }}>
             <Link to="/add" style={{textDecoration: "none", color: "#111"}}>
                 <Button variant="outlined" style={{backgroundColor: "#ccc"}}>

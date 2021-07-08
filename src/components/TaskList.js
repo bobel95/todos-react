@@ -6,7 +6,8 @@ import {Button, Paper, styled} from "@material-ui/core";
 const TaskList = () => {
 
     const TaskListContainer = styled(Paper) ({
-        width: "80%",
+        width: "50%",
+        minWidth: "400px",
         margin: "1rem auto",
         padding: "1rem",
         display: "flex",
